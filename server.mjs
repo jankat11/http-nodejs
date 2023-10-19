@@ -3,7 +3,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import url from "url";
 import querystring from "querystring";
-import cors from "cors"
+import cors from "cors";
 dotenv.config();
 
 const URL = process.env.BASE_URL;
@@ -14,7 +14,7 @@ const config = {
 };
 
 const corsOptions = {
-  origin: 'http://localhost:5173'
+  origin: ["http://localhost:5173", "https://cankatphotos.netlify.app"],
 };
 
 const getPhotos = async (urlParameters) => {
@@ -26,6 +26,7 @@ createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const queryParams = querystring.parse(parsedUrl.query);
   const { per_page, page, query } = queryParams;
+  console.log(queryParams);
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
 
   res.setHeader("Content-Type", "application/json");
