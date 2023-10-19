@@ -32,7 +32,6 @@ createServer((req, res) => {
   const { per_page, page, query } = queryParams;
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
   if(per_page) {
-    console.log("req has come");
     try {
       res.setHeader("Content-Type", "application/json");
       getPhotos(urlParameters).then((data) => {
