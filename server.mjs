@@ -27,14 +27,18 @@ createServer((req, res) => {
   const queryParams = querystring.parse(parsedUrl.query);
   const { per_page, page, query } = queryParams;
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
-
-  res.setHeader("Content-Type", "application/json");
-  getPhotos(urlParameters).then((data) => {
-    const jsonResponse = JSON.stringify(data);
-    cors(corsOptions)(req, res, () => {
-      res.end(jsonResponse);
+  console.log(per_page);
+  if(per_page) {
+    res.setHeader("Content-Type", "application/json");
+    getPhotos(urlParameters).then((data) => {
+      const jsonResponse = JSON.stringify(data);
+      cors(corsOptions)(req, res, () => {
+        res.end(jsonResponse);
+      });
     });
-  });
+  } else {
+    res.end("hello from server")
+  }
 }).listen(process.env.PORT, () => {
   console.log("server is listening");
 });
