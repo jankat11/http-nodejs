@@ -26,7 +26,6 @@ createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const queryParams = querystring.parse(parsedUrl.query);
   const { per_page, page, query } = queryParams;
-  console.log(queryParams);
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
 
   res.setHeader("Content-Type", "application/json");
