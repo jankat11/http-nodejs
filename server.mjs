@@ -13,6 +13,10 @@ const config = {
   },
 };
 
+const corsOptions = {
+  origin: 'http://localhost:5173'
+};
+
 const getPhotos = async (urlParameters) => {
   const { data } = await axios.get(URL + urlParameters, config);
   return data;
@@ -21,16 +25,13 @@ const getPhotos = async (urlParameters) => {
 createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const queryParams = querystring.parse(parsedUrl.query);
-
   const { per_page, page, query } = queryParams;
-  console.log(per_page, page, query);
-
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
 
   res.setHeader("Content-Type", "application/json");
   getPhotos(urlParameters).then((data) => {
     const jsonResponse = JSON.stringify(data);
-    cors()(req, res, () => {
+    cors(corsOptions)(req, res, () => {
       res.end(jsonResponse);
     });
   });
