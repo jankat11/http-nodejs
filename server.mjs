@@ -18,8 +18,12 @@ const corsOptions = {
 };
 
 const getPhotos = async (urlParameters) => {
-  const { data } = await axios.get(URL + urlParameters, config);
-  return data;
+  try {
+    const { data } = await axios.get(URL + urlParameters, config);
+    return data;
+  } catch {
+    return {"total" : 0, results: []}
+  }
 };
 
 createServer((req, res) => {
@@ -28,13 +32,19 @@ createServer((req, res) => {
   const { per_page, page, query } = queryParams;
   const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
   if(per_page) {
-    res.setHeader("Content-Type", "application/json");
-    getPhotos(urlParameters).then((data) => {
-      const jsonResponse = JSON.stringify(data);
-      cors(corsOptions)(req, res, () => {
-        res.end(jsonResponse);
+    console.log("req has come");
+    try {
+      res.setHeader("Content-Type", "application/json");
+      getPhotos(urlParameters).then((data) => {
+        const jsonResponse = JSON.stringify(data);
+        cors(corsOptions)(req, res, () => {
+          res.end(jsonResponse);
+        });
       });
-    });
+    } catch {
+      console.log("asdasdADASDASD");
+      res.end("someting went wrong")
+    }
   } else {
     res.end("hello from server")
   }
