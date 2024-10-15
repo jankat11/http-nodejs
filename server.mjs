@@ -14,7 +14,7 @@ const config = {
 };
 
 const corsOptions = {
-  origin: ["http://localhost:5173", process.env.ALLOWED_URL],
+  origin: ["http://localhost:5173removehereondev", process.env.ALLOWED_URL],
 };
 
 const getPhotos = async (urlParameters) => {
