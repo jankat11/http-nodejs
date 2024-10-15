@@ -48,6 +48,6 @@ createServer((req, res) => {
   } else {
     res.end("hello from server")
   }
-}).listen(process.env.PORT, () => {
+}).listen(process.env.PORT || 3000, () => {
   console.log("server is listening");
 });
