@@ -9,7 +9,7 @@ dotenv.config();
 const URL = process.env.BASE_URL;
 const config = {
   headers: {
-    Authorization: process.env.ACCESS_TOKEN,
+    Authorization: `Client-ID ${process.env.ACCESS_TOKEN}`,
   },
 };
 
@@ -21,7 +21,8 @@ const getPhotos = async (urlParameters) => {
   try {
     const { data } = await axios.get(URL + urlParameters, config);
     return data;
-  } catch {
+  } catch (error) {
+    console.log(process.env.ACCESS_TOKEN);
     return {"total" : 0, results: []}
   }
 }; 
@@ -30,7 +31,7 @@ createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   const queryParams = querystring.parse(parsedUrl.query);
   const { per_page, page, query } = queryParams;
-  const urlParameters = `per_page=${per_page}&page=${page}&query=${query}`;
+  const urlParameters = `/search/photos?per_page=${per_page}&page=${page}&query=${query}`;
   if(per_page) {
     try {
       res.setHeader("Content-Type", "application/json");
