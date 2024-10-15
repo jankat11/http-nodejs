@@ -24,7 +24,7 @@ const getPhotos = async (urlParameters) => {
   } catch {
     return {"total" : 0, results: []}
   }
-};
+}; 
 
 createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
